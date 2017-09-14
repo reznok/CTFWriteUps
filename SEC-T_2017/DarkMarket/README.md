@@ -13,6 +13,12 @@ Service: http://defense.alieni.se:3002/
 - graphql
 - burp
 
+### Short Solution (tldr;)
+- Create two accounts (account A and account B)
+- Buy an item on account B
+- Delete the order using the userID of account A and orderId from account B
+- Buy a flare gun with your extra money on account A
+
 
 So right off the bat, we're given a Log In page and a Products page. After checking the Products page, I noticed that there's a Flare Gun with the description:
 > Our best defense system, recommended for usage in quick escapes. Perfect for dumpster diving.
