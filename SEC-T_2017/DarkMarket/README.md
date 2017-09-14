@@ -1,6 +1,6 @@
-##Dark Market##
+## Dark Market
 
-###Challenge###
+### Challenge
 ```
 Dark market - Web (300 + 0)
 
@@ -9,10 +9,10 @@ You need to up your game before you go dumpster diving again, they'll trace you 
 Service: http://defense.alieni.se:3002/
 ```
 
-###Topics and Tools###
+### Topics and Tools
 - graphql
 - burp
-###
+
 
 So right off the bat, we're given a Log In page and a Products page. After checking the Products page, I noticed that there's a Flare Gun with the description:
 > Our best defense system, recommended for usage in quick escapes. Perfect for dumpster diving.
@@ -21,7 +21,7 @@ Considering the challenge mentions dumpster diving, I assumed that I would need 
 
 I registered for an account and was greeted with the following:
 
-[HomePageSS](blob:https://imgur.com/a4b5d277-0989-7748-9f26-f77ed8ebb4fd)
+![HomePageSS](https://i.imgur.com/9Vv2wJG.png)
 
 I had $100, but needed $110 which was unfortunate. So instead of a flare gun, I bought myself some pepper spray. This gave me an Order ID of `9fcdcedb-f15f-4759-b6d4-dfbe2419a0fc`.
 
@@ -85,7 +85,7 @@ So it looked like a graphql interface was being hit for all database transaction
 First thing on the list was to get the entire database schema. This is easily done using the query found here: https://gist.github.com/craigbeck/b90915d49fda19d5b2b17ead14dcd6da
 After submitting this, I got the whole schema which can be found at: [graphql schema](database_schema.json)
 
-(BurpSchema)[https://i.imgur.com/AB7PJDb.png]
+![BurpSchema](https://i.imgur.com/AB7PJDb.png)
 
 Diving into this schema, I noticed that there are three ways we can interact with data: findOrder, findProduct, and deleteOrder. findOrder and findProduct are defined as query objects, and deleteOrder is defined as mutation.
 
@@ -233,25 +233,25 @@ The ID is base64 encoded, and that decoded to: `Users:2147`
 
 I now had a userId and an orderId and it was time to delete some orders.
 
-(BurpDeleteOrder)[https://i.imgur.com/d7iZs24.png]
+![BurpDeleteOrder](https://i.imgur.com/d7iZs24.png)
 
 Got a success message and then confirmed that my order did indeed get deleted and my **money was refunded to my wallet.**
 
 I was stuck here for a while until I had a crazy idea. What if the deleteOrder wasn't checking that the orderId and userId were actually tied to each other? This could potentially allow me to get more than $100.
 
-This was easy enough to test, so I went for it. I made a new user account, bought myself some brass knuckles on it, and was given the orderId of: 337894b5-f8ff-4923-8b6a-b0fd9f77154d
-Plugged that orderId into the same deleteOrder query so that it was the orderId from the new account and the userId from the old account:
+This was easy enough to test, so I went for it. I made a new user account, bought myself some brass knuckles on it, and was given the orderId of: 337894b5-f8ff-4923-8b6a-b0fd9f77154d.
+I Plugged that orderId into the same deleteOrder query so that it was the orderId from the new account and the userId from the old account:
 
-(BurpDeleteOrder2)[https://i.imgur.com/3GlHvxJ.png]
+![BurpDeleteOrder2](https://i.imgur.com/3GlHvxJ.png)
 
 It appeared to have worked. Then on my original account, I checked my wallet:
-(MoneyMoney)[https://i.imgur.com/LExkj0d.png]
+![MoneyMoney](https://i.imgur.com/LExkj0d.png)
 
 It worked!
 
 I went and bought myself a fancy new flare gun and was greeted with the flag.
 
-(Flag)[https://i.imgur.com/hfT72X7.png]
+![Flag](https://i.imgur.com/hfT72X7.png)
 
 
 
