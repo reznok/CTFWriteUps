@@ -357,6 +357,7 @@ Running the output of this script against my local web app proved that time-base
 With a query like above, it took 5 seconds to return. If I were to change the hardcoded `A` in the query to a `B`, it would return instantly (as it would not hit the SLEEP function).
 
 So after putting _everything_ together, I ended up with an exploit script.
+
 NOTE: The % signs need to be double encoded when going through Tet Shop, so `final = encode(auth + pay1 + "0100000001")` is changed to `final = encode(auth + pay1 + "0100000001").replace("%", "%%25")`
 
 ![Exploit](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/exploit.png?raw=true)
