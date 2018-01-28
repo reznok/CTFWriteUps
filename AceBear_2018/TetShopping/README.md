@@ -356,7 +356,7 @@ This snippet shows how to get the gopher:// version of any query. There was a lo
 Running the output of this script against my local web app proved that time-based blind SQLi was possible as I had a fake flag in my flag database called `ACEBEAR{A_flag_HaS_You}`.
 With a query like above, it took 5 seconds to return. If I were to change the hardcoded `A` in the query to a `B`, it would return instantly (as it would not hit the SLEEP function).
 
-So after putting _everything_ together, I ended up with an exploit script.
+So after putting _everything_ together, I ended up with an ![exploit script](exploit.py).
 
 NOTE: The % signs need to be double encoded when going through Tet Shop, so `final = encode(auth + pay1 + "0100000001")` is changed to `final = encode(auth + pay1 + "0100000001").replace("%", "%%25")`
 
