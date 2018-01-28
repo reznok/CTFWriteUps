@@ -365,4 +365,4 @@ https://tinyurl.com/y9pplum3
 
 Which is an image with the flag on it:
 
-![Flag](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/flag.jpg?raw=true)
+![Flag](screenshots/flag.jpg)
