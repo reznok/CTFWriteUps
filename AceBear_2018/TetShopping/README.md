@@ -296,7 +296,7 @@ Payload: http://128.199.179.156/info.php?uid=test%1$c%20%20UNION%20SELECT%20%1$c
 
 I tested this to see if I could load images from remote locations, and I could: I set img to http://<my_vps>/cat.jpg and huzzah!
 
-![RemoteImage](/screenshots/remoteimgae.png)
+![RemoteImage](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/remoteimage.png?raw=true)
 
 This goes back to what I mentioned earlier about how the update to `info.php` is incorrect. There is no `http://127.0.0.1/` prepended to requests, and if there was, it would make my next step impossible!
 
@@ -306,11 +306,11 @@ Because the web app is using cURL, we can use gopher:// to communicate with the 
 
 Here is a screenshot of what the traffic looks like when connect to a MySQL database using the mysql cli client:
 
-![Wireshark](/screenshots/wireshark.png)
+![Wireshark](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/wireshark.png?raw=true)
 
 We can filter this to only look at the bytes that we sent to the server:
 
-![Wireshark2](/screenshots/wireshark2.png)
+![Wireshark2](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/wireshark2.png?raw=true)
 
 NOTE: I highly recommend reading the write-ups linked above before continuing. The one in Chinese is worth translating as the rest is copied almost step by step from there.
 
@@ -358,11 +358,11 @@ With a query like above, it took 5 seconds to return. If I were to change the ha
 So after putting _everything_ together, I ended up with an exploit script.
 NOTE: The % signs need to be double encoded when going through Tet Shop, so `final = encode(auth + pay1 + "0100000001")` is changed to `final = encode(auth + pay1 + "0100000001").replace("%", "%%25")`
 
-![Exploit](/screenshots/exploit.png)
+![Exploit](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/exploit.png?raw=true)
 
 This ends up giving a URL instead of an actual flag of:
 https://tinyurl.com/y9pplum3
 
 Which is an image with the flag on it:
 
-![Flag](/screenshots/flag.jpg)
+![Flag](https://github.com/reznok/CTFWriteUps/blob/master/AceBear_2018/TetShopping/screenshots/flag.jpg?raw=true)
