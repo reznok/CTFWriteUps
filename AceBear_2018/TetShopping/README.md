@@ -296,7 +296,7 @@ Payload: http://128.199.179.156/info.php?uid=test%1$c%20%20UNION%20SELECT%20%1$c
 
 I tested this to see if I could load images from remote locations, and I could: I set img to http://<my_vps>/cat.jpg and huzzah!
 
-![RemoteImage](screenshots/remoteimage.png
+![RemoteImage](screenshots/remoteimage.png)
 
 This goes back to what I mentioned earlier about how the update to `info.php` is incorrect. There is no `http://127.0.0.1/` prepended to requests, and if there was, it would make my next step impossible!
 
@@ -306,7 +306,7 @@ Because the web app is using cURL, we can use gopher:// to communicate with the 
 
 Here is a screenshot of what the traffic looks like when connect to a MySQL database using the mysql cli client:
 
-![Wireshark](screenshots/wireshark.png)
+![Wireshark](screenshots/wireshark1.png)
 
 We can filter this to only look at the bytes that we sent to the server:
 
