@@ -24,7 +24,7 @@ After searching for /admin related pages on the website and finding nothing,
 I did a port scan of the localhost network. Using Burp Intruder I checked every  
 port with requests:
 
-Host: 127.0.0.0:{var}  
+Host: 127.0.0.1:{var}  
 Urlpath: admin/
 
 Eventually I discovered another web app running on 127.0.0.1:8088.
