@@ -13,14 +13,14 @@ for control of a file. The short description is we're presented with a python
 SimpleHTTPServer that also supports an upload. You can upload any file with the key  
 'file':
 
-![upload]("screenshots/upload.png")
+![upload](screenshots/upload.png)
 
 The description tells us that a user "manhndd" SSH's in every 2 minutes. When a user
 connects over SSH, typically they're using bash as their shell and will load the
 files ~/.profile and ~/.bashrc. We are able to overwrite these two files by changing  
 the filename of the upload:  
 
-![bashrc]("screenshots/bashrc.png")
+![bashrc](screenshots/bashrc.png)
 
 The issue is that every other team is going to be trying to stomp on these files.  
 I put my requests into Burp Intruder and had it constantly stomp on ~/.profile  
