@@ -10,8 +10,8 @@ Team: OpenToAll
 The challenge starts with a web app that asks for a Host and a Urlpath. These are  
 used to load remote web pages in the style of:
 
-Host: 202.182.120.169:1337
-Urlpath: index.php
+Host: 202.182.120.169:1337  
+Urlpath: index.php  
 Request = http://202.182.120.169:1337/index.php
 
 ![initialchallenge](screenshots/initialchallenge.png)
