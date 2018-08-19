@@ -2,8 +2,8 @@ Web03
 Description: manhndd is running a service file upload at web01.grandprix.whitehatvn.com, it is restored every 2 minutes. Every 1 minute after service starts, he ssh into server to check /var/secret. Can you get it?  
 Note: Player shouldn't Dos web01, you can get source code and run in local  
 http://web01.grandprix.whitehatvn.com/  
-Solves: 10  
-Points: 410  
+Solves: A lot 
+Points: 100
 Team: OpenToAll  
 
 --------------------------------------
