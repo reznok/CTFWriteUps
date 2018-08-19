@@ -9,8 +9,11 @@ Team: OpenToAll
 --------------------------------------
 
 This... was a frustrating challenge. It involves racing against every other team  
-for control of a file. The short description is we're presented with a python  
-SimpleHTTPServer that also supports an upload. You can upload any file with the key  
+for control of a file. The short description is: we're presented with a python  
+SimpleHTTPServer that also supports an upload and must win the race for control of .bashrc or .profile.  
+  
+
+You can upload any file with the key  
 'file':
 
 ![upload](screenshots/upload.png)
