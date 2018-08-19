@@ -50,5 +50,9 @@ cp /var/secret /opt/dogs
 The issue is that every other team is going to be trying to stomp on these files.  
 I put my requests into Burp Intruder and had it constantly stomp on ~/.profile  
 and ~/.bashrc until the file /var/secret got copied into /opt (the root of the webserver).  
+Once that happens, the flag is reachable at:  
+http://web01.grandprix.whitehatvn.com/dogs
+  
+  
 I don't have a copy of the flag anymore, but eventually a file named "dogs" appeared
 in the index and the flag was WhiteHat{SHA1(file_contents)}
