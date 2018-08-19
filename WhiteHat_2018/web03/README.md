@@ -124,7 +124,7 @@ admin/index.php?Page=Addons&Addon=dynamiccontenttags&Action=Edit&id=-1%27+%55NIO
 ```
 
 ![flag](screenshots/flag.png)
-![flag](screenshots/flag_wh_rendered.png)
+![flag](screenshots/flag_rendered.png)
 
 `WhiteHat{cbb66097f69c3938bfd4a157ab4ebe762a16c1b1}`
 
