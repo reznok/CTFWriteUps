@@ -1,8 +1,8 @@
-Web03
-Description: None
-web03.grandprix.whitehatvn.com:1337
-Solves: 10
-Points: 410
+Web03  
+Description: None  
+web03.grandprix.whitehatvn.com:1337  
+Solves: 10  
+Points: 410  
 
 --------------------------------------
 
