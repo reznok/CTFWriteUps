@@ -17,7 +17,7 @@ SimpleHTTPServer that also supports an upload. You can upload any file with the 
 
 The description tells us that a user "manhndd" SSH's in every 2 minutes. When a user
 connects over SSH, typically they're using bash as their shell and will load the
-files ~/.profile and ~/.bashrc. We are able to overwrite these two files by changing  
+files ~/.profile and ~/.bashrc on connect. We are able to overwrite these two files by changing  
 the filename of the upload:  
 
 ![bashrc](screenshots/bashrc.png)
